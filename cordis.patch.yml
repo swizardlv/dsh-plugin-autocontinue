@@ -1,0 +1,7 @@
+# dsh-plugin-autocontinue bundle patch: register the plugin's own loader entry.
+# This makes the Host half (`lib/index.js` apply) load as a Cordis plugin, and
+# lets dsh-client-modules serve the client half (`lib/client.js`) — the same
+# pattern dsh-base / dsh-web-app use.
+- insert:
+    - id: autocontinue
+      name: dsh-plugin-autocontinue
