@@ -2,6 +2,8 @@
 
 DSH（DeepSeek Harness）插件：当 agent 一轮运行失败（UI 显示 **"本轮运行失败"**）时，自动向该 agent 发送一条"请继续"消息，让它进入新的一轮继续工作，减少需要人工干预的失败。
 
+![自动继续生效示例](docs/auto-continue.png)
+
 ## 工作原理
 
 - **失败信号**：监听 `session/event` 中的 `turn/end` 事件，当 `reason.kind === "error"` 时判定为本轮失败——这正是 UI 渲染"本轮运行失败"的同一个事件。
