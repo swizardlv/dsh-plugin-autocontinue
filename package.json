@@ -2,7 +2,7 @@
   "name": "dsh-plugin-autocontinue",
   "version": "0.1.0",
   "description": "DSH plugin: automatically continue when a turn fails (本轮运行失败 → 自动继续)",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/types/index.d.ts",

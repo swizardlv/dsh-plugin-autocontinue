@@ -100,4 +100,4 @@ pnpm add github:swizardlv/dsh-plugin-autocontinue
 
 ## License
 
-MIT
+[Apache License 2.0](LICENSE)
