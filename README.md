@@ -65,6 +65,8 @@ pnpm add github:swizardlv/dsh-plugin-autocontinue
 
 插件在 GUI 的设置 → 插件配置 中提供一张 **"自动继续"** 卡片，修改即时生效（无需重启）；也可通过上方 cordis.patch.yml 注入。
 
+![自动继续设置卡片](docs/autocontinue-settings.png)
+
 | 配置项 | 类型 | 默认值 | 说明 |
 |---|---|---|---|
 | `enabled` | boolean | `true` | 总开关 |
