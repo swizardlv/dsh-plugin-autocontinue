@@ -16,20 +16,59 @@ DSH（DeepSeek Harness）插件：当 agent 一轮运行失败（UI 显示 **"�
 
 ## 安装
 
-1. 安装到桌面 profile：
+> ⚠️ **重要：本插件尚未发布到 npm registry**。以下 `pnpm add dsh-plugin-autocontinue` 仅在未来发布后生效；当前直接执行会失败（404）。请从下面三种方式中选择一种。
 
-   ```bash
-   cd ~/.dsh/profiles/desktop
-   pnpm add dsh-plugin-autocontinue
-   ```
+### 方式 A：从 npm 安装（仅发布后可用）
 
-2. 在 `~/.dsh/profiles/desktop/package.json` 的 `dsh.profile.bundles` 数组追加：
+```bash
+cd ~/.dsh/profiles/desktop
+pnpm add dsh-plugin-autocontinue
+```
+
+### 方式 B：本地路径安装（推荐，无需发布）
+
+```bash
+cd ~/.dsh/profiles/desktop
+pnpm add file:/path/to/dsh-plugin-autocontinue
+```
+
+### 方式 C：从 GitHub 安装（无需发布）
+
+```bash
+cd ~/.dsh/profiles/desktop
+pnpm add github:swizardlv/dsh-plugin-autocontinue
+```
+
+### 安装后的公共步骤
+
+1. 在 `~/.dsh/profiles/desktop/package.json` 的 `dsh.profile.bundles` 数组追加：
 
    ```json
    "dsh-plugin-autocontinue"
    ```
 
-3. 重启桌面 app 生效。
+2. 重启桌面 app 生效。
+
+### ⚠️ 已知坑：peer 依赖
+
+插件在 `peerDependencies` 中声明了对 DSH 内部包的依赖（`@deepseek-ai/cordis`、`@deepseek-ai/dsh-settings`、`@deepseek-ai/dsh-llm` 等）。这些包**不在** profile 的 `node_modules` 里（它们由 DSH 桌面 app 从自身安装位置解析），且你的 profile `pnpm-workspace.yaml` 是 `autoInstallPeers: false`：
+
+```yaml
+nodeLinker: hoisted
+autoInstallPeers: false
+```
+
+后果与处理：
+- `pnpm add` 时可能报 peer 依赖缺失警告（warning），通常不影响安装完成。
+- 安装完成后，若插件在 DSH 中未被加载或报 `Cannot find module '@deepseek-ai/...'`，需要手动补装 peer 依赖，例如：
+
+  ```bash
+  pnpm add @deepseek-ai/dsh-settings@^0.1.1-rc.2 --save-peer
+  ```
+
+  或临时把 `autoInstallPeers` 改为 `true` 后重新 `pnpm install`，装完再改回。
+
+- 本仓库的 `scripts/verify.mjs` 通过符号链接 DSH 的 `node_modules` 来做代码级验证，实际安装时的 peer 解析行为需以真实 profile 为准。
 
 ### 可选：注入默认配置
 
